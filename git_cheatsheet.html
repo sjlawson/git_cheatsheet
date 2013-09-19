@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Git Cheatsheet</title>
+
+        <style type="text/css">
+            body { background-color: grey; color: #444; margin: 0; padding: 0; font-size:15px; font-family: Arial,sans-serif; }
+            .page { background-color: white; width: 900px; margin:0 auto 6em auto; padding: 1em; }
+            h1, h2, h3, h4 { color: #66F; margin-top:0; }
+            .title { text-align:center; }
+            .code { background-color: #F5F5F5; padding: 1em; border:1px solid #CCC; border-radius: 8px; margin: 1em 0; }
+        </style>
+    </head>
+    <body>
+        <div class="page">
+            <div class="title">
+                <h1>Git Cheatsheet</h1>
+                <h4 style="">- or -</h4>
+                <h2>How I Learned to Stop Worrying and Love Git</h2>
+            </div>
+            <div class="body">
+                <p>This document assumes you know the basic git commands: status, commit, clone, branch, checkout, merge, push, pull, add, rm, log, fetch, and tag.  Additionally, I am assuming you have a basic understanding of git internals, such as what HEAD means, what a branch is, and how to write useful commit messages.  If you don't, please don't hesitate to ask your neighbor.  I recommend reading Scott Chacon's excellent book "<a href="http://git-scm.com/book">Pro Git</a>".</p>
+
+                <p>I know that most people use git clients instead of the command line.  I will describe how to use the command line, and it will be up to you to translate this to your specific client.</p>
+
+                <p>One important point: as with any good program, there are several ways to accomplish the exact same thing.  Git is well known for having numerous shortcut methods, as well.  I am presenting what works for me.  I'm certain that in many cases, there are simpler and easier ways of accomplishing the exact same task.  This document is itself in a git repository: improve it and share your changes.</p>
+
+                <h3>Create A New Branch</h3>
+                <ol>
+                    <li>
+                        Checkout the parent branch.
+                        <div class="code">
+                            git checkout &lt;parent-branch-name&gt;
+                        </div>
+                    </li>
+                    <li>
+                        Pull in the latest and greatest code from your coworkers.
+                        <div class="code">
+                            git pull origin &lt;parent-branch-name&gt;
+                        </div>
+                    </li>
+                    <li>
+                        Create your new branch from the parent branch.
+                        <div class="code">
+                            git checkout -b &lt;child-branch-name&gt;
+                        </div>
+                    </li>
+                </ol>
+
+                <h3>Merge A Branch</h3>
+                <ol>
+                    <li>
+                        Check that the branch to merge is in a stable, committed state.
+                        <div class="code">
+                            git status
+                        </div>
+                        You should get something like this:
+                        <div class="code">
+                            # On branch master<br />
+                            nothing to commit (working directory clean)
+                        </div>
+                    </li>
+                    <li>
+                        Check out the parent branch.
+                        <div class="code">
+                            git checkout &lt;parent-branch-name&gt;<br />
+                        </div>
+                    </li>
+                    <li>
+                        Pull in the latest and greatest code from your coworkers.
+                        <div class="code">
+                            git pull origin &lt;parent-branch-name&gt;<br />
+                        </div>
+                    </li>
+                    <li>
+                        Merge the child branch.  (Note: I highly recommend using the "no-fast-forward" (--no-ff) flag.  This might save you a huge headache if you need to back out your merge.)
+                        <div class="code">
+                            git merge --no-ff &lt;child-branch-name&gt;
+                        </div>
+                    </li>
+                    <li>
+                        If there are any merge conflicts, you would get a message like this:
+                        <div class="code">
+                            CONFLICT (content): Merge conflict in index.html<br />
+                            Automatic merge failed; fix conflicts and then commit the result.
+                        </div>
+                        Git is giving you instructions.  Follow them.  Fix the conflict (now), and then commit the result.  Once you commit the result, your merge is complete.
+                    </li>
+                    <li>
+                        Share your changes with the group.<br />
+                        If you merged into a shared branch, you must share with the group.  If you merged into a private branch and you do not want to share, do not do this step.
+                        <div class="code">
+                            git push origin &lt;branch-name&gt;
+                        </div>
+                    </li>
+                </ol>
+
+                <h3>Deleting A Branch</h3>
+                You must never delete the "staging" and "master" branches.  Project branches should only be deleted after the project is done.  Personal branches can be deleted once they are merged.
+                <ol>
+                    <li>
+                        Delete the branch
+                        <div class="code">
+                            git branch -d &lt;branch-name&gt;
+                        </div>
+                    </li>
+                </ol>
+
+                <h3>Recommended Daily Workflow</h3>
+                <ol>
+                    <li>
+                        At the start of the day, get the lastest and greatest code from your coworkers. Start work on your personal branch.<br />
+                        Note: Since you will be managing a large number of branches in your repository, having a standard branch naming scheme is very handy.  I name my personal branches as the project name prefixed with my initials.  (Ex: ktw-mhc_poslog)  Whatever you do is up to you, just make it work for you.
+                        <div class="code">
+                            git checkout &lt;project-branch-name&gt;<br />
+                            git pull origin &lt;project-branch-name&gt;<br />
+                            git checkout -b &lt;personal-branch-name&gt;
+                        </div>
+                    </li>
+                    <li>
+                        At the end of the day, share your latest and greatest code with the rest of the team.
+                        <div class="code">
+                            git checkout &lt;project-branch-name&gt;<br />
+                            git pull origin &lt;project-branch-name&gt;<br />
+                            git merge --no-ff &lt;personal-branch-name&gt;<br />
+                            git push origin &lt;project-branch-name&gt;
+                        </div>
+                    </li>
+                    <li>
+                        Delete your personal branch.
+                        <div class="code">
+                            git branch -d &lt;personal-branch-name&gt;
+                        </div>
+                    </li>
+                    <li>
+                        Go home and have a beer.  \o/
+                    </li>
+                </ol>
+
+                <h3>Publishing code to live (internal.mooreheadcomm.com)</h3>
+                <ol>
+                    <li>
+                        Checkout the master branch and pull in the latest changes.
+                        <div class="code">
+                            git checkout master<br />
+                            git pull origin master
+                        </div>
+                    </li>
+                    <li>
+                        Find the id (7 digit hash) of the commit you want to mark as "stable".
+                        <div class="code">
+                            git log
+                        </div>
+                    </li>
+                    <li>
+                        Create the tag.<br />
+                        Note: The tag name should be a date (or datetime) string: We'll use "20130919" as our tag name for this example.
+                        <div class="code">
+                            git tag -a 20130919 &lt;commit-id&gt; -m 'Release on 20130919.'
+                        </div>
+                    </li>
+                    <li>
+                        Push the tag to the origin repository
+                        <div class="code">
+                            git push origin 20130919
+                        </div>
+                    </li>
+                    <li>
+                        SSH into internal.mooreheadcomm.com, do a pull, and checkout the tag.
+                        <div class="code">
+                            git pull origin master<br />
+                            git checkout 20130919
+                        </div>
+                    </li>
+                </ol>
+
+                <h3>Rolling Back Code On Live (internal.mooreheadcomm.com)</h3>
+                So, someone pushed some bad code to live. Of course, this is purely hypothetical, because this never actually happens. ;-)
+                <ol>
+                    <li>
+                        SSH into live. Get the list of tags to find the most recent stable version.
+                        <div class="code">
+                            git tag
+                        </div>
+                    </li>
+                    <li>
+                        Checkout the most recent stable version.
+                        <div class="code">
+                            git checkout &lt;tag-name&gt;
+                        </div>
+                    </li>
+                    <li>
+                        Delete the tag associated with the borked code.
+                        <div class="code">
+                            git tag -d &lt;borked-tag-name&gt;
+                        </div>
+                        You will also need to SSH into origin and delete the tag there.  It would be a good idea to email the group to let them know the situation and which tag to delete.
+                    </li>
+                </ol>
+
+                <h3>Patching (Rarely done)</h3>
+                <p>Reference: <a href="http://ariejan.net/2009/10/26/how-to-create-and-apply-a-patch-with-git/">http://ariejan.net/2009/10/26/how-to-create-and-apply-a-patch-with-git/</a></p>
+                <p>Occasionally, you will need to merge your branch to a non-parent branch.  This is done with patches.  In this example we will fix a bug (issue #45) on master.</p>
+                <ol>
+                    <li>
+                        Checkout master.
+                        <div class="code">
+                            git checkout master<br />
+                            git pull origin master
+                        </div>
+                    </li>
+                    <li>
+                        Make a child branch for our bugfix.
+                        <div class="code">
+                            git checkout -b issue45
+                        </div>
+                    </li>
+                    <li>
+                        Fix the bug and commit all your changes.
+                    </li>
+                    <li>
+                        Make a patch.
+                        <div class="code">
+                            git format-patch master --stdout > issue45.patch
+                        </div>
+                        This will squash the entire branch (issue45) into one patch, and write the patch file to your drive.
+                    </li>
+                    <li>
+                        Merge your changes back into master.
+                        <div class="code">
+                            git checkout master<br />
+                            git pull origin master<br />
+                            git merge --no-ff issue45<br />
+                            git push origin master
+                        </div>
+                    </li>
+                    <li>
+                        Patch the non-parent branches.  Ex: staging<br />
+                        <ol>
+                            <li>
+                                The first step is to check that the patch applies to the non-parent branch.
+                                <div class="code">
+                                    git checkout staging<br />
+                                    git apply --check issue45.patch
+                                </div>
+                            </li>
+                            <li>
+                                If you get no errors, then the patch applied successfully.  Now we apply the patch.
+                                <div class="code">
+                                    git apply issue45.patch<br />
+                                    git commit -am 'Fixing issue #45.'<br />
+                                    git push origin staging
+                                </div>
+                            </li>
+                            <li>
+                                Email the patch file to your coworkers so they can apply the patch to their personal branches, if necessary.
+                            </li>
+                        </ol>
+                    </li>
+                    <li>
+                        Delete the issue branch.
+                        <div class="code">
+                            git branch -d issue45
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </body>
+</html>
