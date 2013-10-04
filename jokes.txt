@@ -1,4 +1,4 @@
-Some Programming Humor
+﻿Some Programming Humor
 
 Add a joke and your name.
 
@@ -34,4 +34,12 @@ Here's another one for you.  - Kevin
 There are 10 types of people in the world. Those who understand binary and
 those who don't.
 
----------------------------------
+-------------------------------
+
+Knock knock.
+Race condition.
+Who's there?
+
+- Chris
+
+-------------------------------
