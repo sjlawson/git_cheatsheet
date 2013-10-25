@@ -68,3 +68,11 @@ Q: How many Microsoft developers does it take to change a light bulb?
 A: None. They try to convince everyone that darkness is now the industry standard.
 
 -------------------------------
+
+I am not a funny person! This joke was lifter from StackOverflow (http://stackoverflow.com/questions/234075/what-is-your-best-programmer-joke)
+
+Q: how many programmers does it take to change a light bulb?
+A: none, that's a hardware problem
+
+- Dwain
+-------------------------------
