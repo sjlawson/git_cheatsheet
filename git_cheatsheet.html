@@ -10,6 +10,7 @@
             h1, h2, h3, h4 { color: #66F; margin-top:0; }
             .title { text-align:center; }
             .code { background-color: #F5F5F5; padding: 1em; border:1px solid #CCC; border-radius: 8px; margin: 1em 0; }
+            .core-guidelines { font-size: 130%; font-weight: bold; }
         </style>
     </head>
     <body>
@@ -25,6 +26,12 @@
                 <p>I know that most people use git clients instead of the command line.  I will describe how to use the command line, and it will be up to you to translate this to your specific client.</p>
 
                 <p>One important point: as with any good program, there are several ways to accomplish the exact same thing.  Git is well known for having numerous shortcut methods, as well.  I am presenting what works for me.  I'm certain that in many cases, there are simpler and easier ways of accomplishing the exact same task.  This document is itself in a git repository: improve it and share your changes.</p>
+
+                <h2>Core Guidelines</h2>
+                <ol class="core-guidelines">
+                    <li>Never work on a shared branch.</li>
+                    <li>Only merge a branch into its parent branch.</li>
+                </ol>
 
                 <h3>Create A New Branch</h3>
                 <ol>
@@ -135,67 +142,6 @@
                     </li>
                     <li>
                         Go home and have a beer.  \o/
-                    </li>
-                </ol>
-
-                <h3>Publishing code to live (internal.mooreheadcomm.com)</h3>
-                <ol>
-                    <li>
-                        Checkout the master branch and pull in the latest changes.
-                        <div class="code">
-                            git checkout master<br />
-                            git pull origin master
-                        </div>
-                    </li>
-                    <li>
-                        Find the id (7 digit hash) of the commit you want to mark as "stable".
-                        <div class="code">
-                            git log
-                        </div>
-                    </li>
-                    <li>
-                        Create the tag.<br />
-                        Note: The tag name should be a date (or datetime) string: We'll use "20130919" as our tag name for this example.
-                        <div class="code">
-                            git tag -a 20130919 &lt;commit-id&gt; -m 'Release on 20130919.'
-                        </div>
-                    </li>
-                    <li>
-                        Push the tag to the origin repository
-                        <div class="code">
-                            git push origin 20130919
-                        </div>
-                    </li>
-                    <li>
-                        SSH into internal.mooreheadcomm.com, do a pull, and checkout the tag.
-                        <div class="code">
-                            git pull origin master<br />
-                            git checkout 20130919
-                        </div>
-                    </li>
-                </ol>
-
-                <h3>Rolling Back Code On Live (internal.mooreheadcomm.com)</h3>
-                So, someone pushed some bad code to live. Of course, this is purely hypothetical, because this never actually happens. ;-)
-                <ol>
-                    <li>
-                        SSH into live. Get the list of tags to find the most recent stable version.
-                        <div class="code">
-                            git tag
-                        </div>
-                    </li>
-                    <li>
-                        Checkout the most recent stable version.
-                        <div class="code">
-                            git checkout &lt;tag-name&gt;
-                        </div>
-                    </li>
-                    <li>
-                        Delete the tag associated with the borked code.
-                        <div class="code">
-                            git tag -d &lt;borked-tag-name&gt;
-                        </div>
-                        You will also need to SSH into origin and delete the tag there.  It would be a good idea to email the group to let them know the situation and which tag to delete.
                     </li>
                 </ol>
 
