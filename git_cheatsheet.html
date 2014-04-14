@@ -10,7 +10,7 @@
             h1, h2, h3, h4 { color: #66F; margin-top:0; }
             .title { text-align:center; }
             .code { background-color: #F5F5F5; padding: 1em; border:1px solid #CCC; border-radius: 8px; margin: 1em 0; }
-            .core-guidelines { font-size: 130%; font-weight: bold; }
+            .core-guidelines { font-size: 150%; font-weight: bold; }
         </style>
     </head>
     <body>
@@ -208,6 +208,48 @@
                         Delete the issue branch.
                         <div class="code">
                             git branch -d issue45
+                        </div>
+                    </li>
+                </ol>
+
+                <h3>Pushing code to master</h3>
+                <p>The staging and master branch should be mostly in sync.  The only differences should be the changes in staging waiting to be moved into the master branch.  Currently, our staging and master branches are out of sync.  Therefore, we use this little technique to push code into the master branch.</p>
+                <p style="font-weight: bold;">Note: When we get a real deployment system, this will no longer be used.</p>
+                <ol>
+                    <li>
+                        Merge all your code into the staging branch using the above techniques.
+                    </li>
+                    <li>
+                        Checkout the master branch.
+                        <div class="code">
+                            git checkout master
+                        </div>
+                    </li>
+                    <li>
+                        Pull the latest from the master branch.
+                        <div class="code">
+                            git pull origin master
+                        </div>
+                    </li>
+                    <li>
+                        Navigate to the modules directory below the module you wish to merge.
+                        <div class="code">
+                            cd &lt;some-path&gt;/modules
+                        </div>
+                    </li>
+                    <li>
+                        Checkout the module from the staging branch.
+                        <div class="code">
+                            git checkout staging &lt;module-name&gt;
+                        </div>
+                    </li>
+                    <li>
+                        Changes have not been pulled into the master branch.  You must commit them.  (You may need to add the files first.)
+                    </li>
+                    <li>
+                        Push your changes.
+                        <div class="code">
+                            git push origin master
                         </div>
                     </li>
                 </ol>
