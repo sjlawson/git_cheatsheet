@@ -253,6 +253,32 @@
                         </div>
                     </li>
                 </ol>
+
+                <h3>Deployment</h3>
+                <p>At MHC, we will only deploy code to production with git tags.  Here's how you make a tag in git.</p>
+                <ol>
+                    <li>
+                        Checkout the code you wish to tag (and hence deploy).  Note: If you want to deploy master:head, you will likely need to do a pull.
+                        <div class="code">
+                            git checkout origin master
+                        </div>
+                    </li>
+                    <li>
+                        Create the tag.  Annotate (-a) the tag with a date-time string.
+                        <div class="code">
+                            git tag -a 201406051344 -m 'May 5th, 2014 at 1:44PM'
+                        </div>
+                    </li>
+                    <li>
+                        Push your tag to origin.
+                        <div class="code">
+                            git push --tags
+                        </div>
+                    </li>
+                    <li>
+                        Now deploy with your new tag.
+                    </li>
+                </ol>
             </div>
         </div>
     </body>
